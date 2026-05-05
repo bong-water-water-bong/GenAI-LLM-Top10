@@ -2,11 +2,21 @@
 
 ### Description
 
-Data poisoning occurs when pre-training, fine-tuning, or embedding data is manipulated to introduce vulnerabilities, backdoors, or biases. This manipulation can compromise model security, performance, or ethical behavior, leading to harmful outputs or impaired capabilities. Common risks include degraded model performance, biased or toxic content, and exploitation of downstream systems.
-
-Data poisoning can target different stages of the LLM lifecycle, including pre-training (learning from general data), fine-tuning (adapting models to specific tasks), embedding (converting text into numerical vectors), and transfer learning (reusing a pre-trained model on a new task). Understanding these stages helps identify where vulnerabilities may originate. Data poisoning is considered an integrity attack since tampering with training data impacts the model's ability to make accurate predictions. The risks are particularly high with external data sources, which may contain unverified or malicious content.
-
-Moreover, models distributed through shared repositories or open-source platforms can carry risks beyond data poisoning, such as malware embedded through techniques like malicious pickling, which can execute harmful code when the model is loaded. Also, consider that poisoning may allow for the implementation of a backdoor. Such backdoors may leave the model's behavior untouched until a certain trigger causes it to change. This may make such changes hard to test for and detect, in effect creating the opportunity for a model to become a sleeper agent.
+Data & Model Poisoning describes a class of attacks and failures where an adversary (or unsafe process) manipulates data or model artifacts to embed harmful behavior, bias, or exploitable weaknesses into an AI system. In modern GenAI environments, poisoning is not limited to “training data” in the traditional sense it can occur anywhere data is ingested, transformed, retrieved, or reused, including during pre-training, fine-tuning, embedding creation, retrieval augmentation (RAG), and model distribution. The result is an AI system that may still appear functional but behaves in ways that undermine trust, safety, and security.
+Data poisoning occurs when pre-training, fine-tuning, or embedding data is tampered with to introduce vulnerabilities, backdoors, or biases. This can happen intentionally (malicious poisoning) or unintentionally (poor data hygiene, contaminated sources). The manipulation compromises model integrity and the model learns the wrong patterns, internalizes malicious correlations, or is conditioned to behave incorrectly under certain conditions. The consequences include harmful outputs, impaired capabilities, and degraded reliability.
+The key idea: poisoning targets the model’s “learning process,” not a single runtime bug. Unlike typical software vulnerabilities that can be patched by fixing code, poisoning can require data revalidation, retraining, model replacement, or pipeline redesign making it expensive and operationally disruptive.Poisoning can occur across multiple stages of the LLM lifecycle like:
+Pre-training: The model learns from broad, large-scale corpora. If a portion of that corpus is maliciously crafted or contaminated, the model may absorb harmful patterns, unsafe instructions, or skewed representations.
+Fine-tuning: Models are adapted for specific tasks or domains (e.g., customer support, coding assistants, financial Q&A). If fine-tuning datasets contain manipulated samples, the model can inherit domain-specific failure modes or hidden triggers.
+Embeddings and vectorization: Text is converted into vectors for search and retrieval. Poisoning can target embedding generation data (or the stored vectors) to influence what content is retrieved, resulting in “steered” answers or subtle misinformation.
+Transfer learning / model reuse: Organizations frequently reuse pre-trained models or community models. If the source model is compromised, downstream systems inherit that compromise.
+Continuous learning / retraining pipelines: Some systems update with new data over time. If ingestion is automated and insufficiently validated, attackers can feed poisoned data into the loop and gradually shape model behavior.
+Understanding these stages is essential because it clarifies where vulnerabilities originate and how they propagate.
+Data poisoning surface expands because organizations increasingly rely on:
+-External datasets (public sources, scraped content, third-party corpora)
+-RAG and embeddings (vector databases, retrieval pipelines, document ingestion)
+-Shared models and open repositories (community weights, fine-tunes, adapters)
+-Agentic workflows and automation (AI controlling tasks, actions, and tool use)
+.
 
 ### Common Examples of Vulnerability
 
